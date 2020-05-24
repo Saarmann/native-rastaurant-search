@@ -8,9 +8,9 @@ function Settings(props) {
       <Text style={styles.text}>Settings</Text>
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={() => navigation.popToTop()}
+        onPress={() => navigation.navigate('Search')}
       >
-        <Text style={styles.buttonText}>Go to Home</Text>
+        <Text style={styles.buttonText}>Go to Search</Text>
       </TouchableOpacity>
     </View>
   );

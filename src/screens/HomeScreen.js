@@ -16,7 +16,7 @@ function Home(props) {
         style={styles.buttonContainer}
         onPress={() => navigation.navigate('Detail', { item: character })}
       >
-        <Text style={styles.buttonText}>Who is {character.name}?</Text>
+        <Text style={styles.buttonText}>Who is?</Text>
       </TouchableOpacity>
     </View>
   );
