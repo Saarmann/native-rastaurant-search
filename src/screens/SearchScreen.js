@@ -1,20 +1,48 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import SearchBar from './../components/SearchBar';
+import useBusinesses from './../hooks/useBusinesses';
+import ResultsList from '../components/ResultsList';
 
 const SearchScreen = (props) => {
+  const [term, setTerm] = useState('');
+  const [searchApi, results, errorMessage] = useBusinesses();
+
+  const filterResultsByPrice = (price) => {
+    return results.filter((result) => {
+      return result.price === price;
+    });
+  };
+
   return (
-    <View>
-      <Text>Search Screen</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => props.navigation.popToTop()}
-      >
-        <Text style={styles.buttonText}>Go Homeh</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <SearchBar
+        term={term}
+        onTermChange={(newTerm) => setTerm(newTerm)}
+        onTermSubmit={() => searchApi(term)}
+      />
+      {errorMessage ? <Text>{errorMessage}</Text> : null}
+
+      <ScrollView>
+        <ResultsList
+          results={filterResultsByPrice('$')}
+          title='Cost Effective'
+        />
+        <ResultsList results={filterResultsByPrice('$$')} title='Bit Pricier' />
+        <ResultsList
+          results={filterResultsByPrice('$$$')}
+          title='Big Spender'
+        />
+      </ScrollView>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+});
 
 export default SearchScreen;
